@@ -49,11 +49,11 @@ if (isset($_POST['login'])) {
             $_SESSION['phone_number'] = $row['phone_number'];
              if ($row["type"] == "student") {
                 // Kiểm tra quyền của sinh viên và chuyển hướng tới trang student.php
-                header("Location: student.php");
+                header("Location: studentHome.php");
                 exit;
             } elseif ($row["type"] == "teacher") {
                 // Chuyển hướng tới trang teacher.php
-                header("Location: teacher.php");
+                header("Location: teacherHome.php");
                 exit;
             }else {
                 echo"Wrong username or password";
