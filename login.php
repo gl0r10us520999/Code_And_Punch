@@ -43,7 +43,21 @@ if (isset($_POST['login'])) {
             $row = $result->fetch_assoc();
             $_SESSION['id'] = $row['id'];
             $_SESSION['username'] = $row['username']; 
-            header("location: challenges.php");
+            $_SESSION['id']=$row['id'];
+            $_SESSION['name']=$row['name'];
+            $_SESSION['email'] = $row['email'];
+            $_SESSION['phone_number'] = $row['phone_number'];
+             if ($row["type"] == "student") {
+                // Kiểm tra quyền của sinh viên và chuyển hướng tới trang student.php
+                header("Location: student.php");
+                exit;
+            } elseif ($row["type"] == "teacher") {
+                // Chuyển hướng tới trang teacher.php
+                header("Location: teacher.php");
+                exit;
+            }else {
+                echo"Wrong username or password";
+            }
         }
     } else {
         http_response_code(400);
