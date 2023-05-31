@@ -3,11 +3,13 @@
     //Connect to DB
     function connectDB() {
         global $conn;
-        $conn = mysqli_connect("localhost", "root", "", "CodeAndPunch");
-
-        if (mysqli_connect_errno()) {
-        echo "Failed to connect to MySQL: " . mysqli_connect_error();
-        exit();
+        if(!$conn){
+            $conn = mysqli_connect("localhost", "root", "", "CodeAndPunch");
+            mysqli_set_charset($conn, 'utf8');
+            if (mysqli_connect_errno()) {
+            echo "Failed to connect to MySQL: " . mysqli_connect_error();
+            exit();
+            }
         }
     }
     //Disconnect DB
@@ -18,61 +20,62 @@
         }
     }
     //Edit student informations
-    function Edit_Student($student_id, $student_name, $student_email, $student_phone) {
-        $conn = connectDB();
-        $stmt = $conn->prepare("UPDATE students SET name=?, email=?, phone=? WHERE id=?");
-        $stmt->bind_param("sssi", $student_name, $student_email, $student_phone, $student_id);
-        
-        if ($stmt->execute()) {
-            echo "Student information has been successfully updated!";
-        } else {
-            echo "An error occurred while updating student information!";
-        }
-    
-        $stmt->close();
-        $conn->close();
+    function Edit_Student($id, $username, $password, $name, $email, $phone_number) {
+        global $conn;
+        connectDB();
+
+        //Prevent SQLi
+        $id = intval($id);
+        $username = mysqli_real_escape_string($conn, $username);
+        $password = mysqli_real_escape_string($conn, $password);
+        $name = mysqli_real_escape_string($conn, $name);
+        $email = mysqli_real_escape_string($conn, $email);
+        $phone_number = mysqli_real_escape_string($conn, $phone_number);
+
+        $edit_student = "UPDATE users SET username = $username, password = $password, name = $name, email = $email, phone_number = $phone_number WHERE id = $id";
+
+        $query = mysqli_query($conn, $edit_student);
+
+        disconnectDB();
+        return $query;
     }
     //Delete student
-    function Delete_Student($student_id) {
-        $conn = connectDB();
-        $stmt = $conn->prepare("DELETE FROM students WHERE id=?");
-        $stmt->bind_param("i", $student_id);
-        
-        if ($stmt->execute()) {
-            echo "Student has been deleted!";
-        } else {
-            echo "An error occurred while deleting the student!";
-        }
-    
-        $stmt->close();
-        $conn->close();
+    function Delete_Student($id) {
+        global $conn;
+        connectDB();
+        //prevent SQLi
+        $id = intval($id);
+
+        $delete_student = "DELETE FROM users WHERE id = $id";
+
+        $query = mysqli_query($conn, $delete_student);
+
+        disconnectDB();
+        return $query;
     }
     // Add student
-    function Add_Student($conn, $username, $password, $name, $email, $phone_number) {
-        // Check if username exist or not
-        $checkQuery = "SELECT * FROM student WHERE username = ?";
-        $stmt = $conn->prepare($checkQuery);
-        $stmt->bind_param("s", $username);
-        $stmt->execute();
-        $result = $stmt->get_result();
-    
-        if ($result->num_rows > 0) {
-            echo "Username already exists!";
-            return;
+    function Add_Student($username, $password, $name, $email, $phone_number) {
+        global $conn;
+        connectDB();
+        
+        //Prevent SQLi
+        $username = mysqli_real_escape_string($conn, $username);
+        $password = mysqli_real_escape_string($conn, $password);
+        $name = mysqli_real_escape_string($conn, $name);
+        $email = mysqli_real_escape_string($conn, $email);
+        $phone_number = mysqli_real_escape_string($conn, $phone_number);
+
+        //Check if username alreeady exist
+        $query_check = mysqli_query($conn, "SELECT username FROM users WHERE username = $username");
+        if ($query_check && mysqli_num_rows($query_check) == 0) {
+            $add_student = "INSERT INTO users (username, password, role, name, email, phone_number) VALUES ($username, $password, student, $name, $email, $phone_number)";
+            mysqli_query($conn, $add_student);
+        }else{
+            $query = false;
         }
-    
-        // Hash password
-        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-    
-        // Thêm sinh viên vào cơ sở dữ liệu
-        $insertQuery = "INSERT INTO student (username, password, name, email, phone_number) VALUES (?, ?, ?, ?, ?)";
-        $stmt = $conn->prepare($insertQuery);
-        $stmt->bind_param("sssss", $username, $hashed_password, $name, $email, $phone_number);
-    
-        if ($stmt->execute()) {
-            echo "Student information has been successfully updated!";
-        } else {
-            echo "Error: " . $stmt->error;
-        }
+        disconnectDB();
+        return $query;
     }
+       
+    
 ?>
