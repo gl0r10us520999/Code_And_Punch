@@ -12,6 +12,7 @@
         if ($result) {
             // Student added successfully
             echo "Student added successfully!";
+            header("Location: Student_List.php");
         } else {
             // Failed to add student (username already exists)
             echo "Username already exists. Please choose a different username.";
@@ -116,6 +117,7 @@
             } else {
                 echo '<p class="error-message">Username already exists. Please choose a different username.</p>';
             }
+
         }
         ?>
     </form>
