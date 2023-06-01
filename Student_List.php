@@ -1,6 +1,6 @@
 <?php 
     require './functions.php';
-    $student=get_students_infor();
+    $students=get_students_infor();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -128,8 +128,8 @@
                 <td><?php echo $item['email']; ?></td>
                 <td><?php echo $item['phone_number']; ?></td>
                 <td class="options-btn">
-                    <input onclick="window.location = 'student-edit.php?id=<?php echo $item['id']; ?>'" type="button" value="Sửa">
-                    <form class="delete-form" method="post" action="student-delete.php" onsubmit="return confirm('Bạn có chắc muốn xóa không?');">
+                    <input onclick="window.location = 'Student_Edit.php?id=<?php echo $item['id']; ?>'" type="button" value="Sửa">
+                    <form class="delete-form" method="post" action="Student_Delete.php" onsubmit="return confirm('Bạn có chắc muốn xóa không?');">
                         <input type="hidden" name="id" value="<?php echo $item['id']; ?>">
                         <input type="submit" name="delete" value="Xóa">
                     </form>

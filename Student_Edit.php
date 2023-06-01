@@ -7,7 +7,7 @@
 
     if (!$data) {
         header("Location: Student_List.php");
-    exit();
+        exit();
     }
     
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -18,17 +18,33 @@
         $data['email'] = isset($_POST['email']) ? $_POST['email'] : '';
         $data['phone_number'] = isset($_POST['phone_number']) ? $_POST['phone_number'] : '';
 
-        $result = Edit_Student($data['id'], $data['username'], $data['password'], $data['name'], $data['email'], $data['phone_number']);
-        if ($result) {
-            // Student updated successfully
-            echo "Student information updated successfully!";
+        if (empty($data['name'])) {
+            $errors['name'] = 'Please input a valid name';
+        }
+    
+        if (empty($data['email'])) {
+            $errors['email'] = 'Please input a valid email';
+        }
+        
+        if (empty($data['password'])) {
+            $errors['password'] = 'Please input a valid password';
+        }
+
+        if (empty($data['username'])) {
+            $errors['username'] = 'Please input a valid username';
+        }
+
+        if (empty($data['phone_number'])) {
+            $errors['phone_number'] = 'Please input a valid phone number';
+        }
+        if (empty($errors)) {
+            Edit_Student($data['id'], $data['name'], $data['email'], $data['phone_number'], $data['username'], $data['password']);
+            // Trở về trang danh sách
             header("Location: Student_List.php");
-        } else {
-            // Failed to update student information
-            echo "Failed to update student information.";
-            header("Location: Student_List.php");
+            exit();
         }
     }
+    disconnectDB();
 ?>
 <!DOCTYPE html>
 <html>
@@ -102,36 +118,49 @@
 </head>
 <body>
     <h1>Edit Student</h1>
-    <form method="POST" action="<?php echo $_SERVER["PHP_SELF"]; ?>">
-        <input type="hidden" name="id" value="<?php echo $id; ?>">
-        
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" value="<?php echo $username; ?>" required>
-        
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" value="<?php echo $password; ?>" required>
-        
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" value="<?php echo $name; ?>" required>
-        
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" value="<?php echo $email; ?>" required>
-        
-        <label for="phone_number">Phone Number:</label>
-        <input type="text" id="phone_number" name="phone_number" value="<?php echo $phone_number; ?>" required>
-        
-        <input type="submit" value="Update Student">
-        
-        <?php
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            // Display success or error message
-            if ($result) {
-                echo '<p class="success-message">Student information updated successfully!</p>';
-            } else {
-                echo '<p class="error-message">Failed to update student information.</p>';
-            }
-        }
-        ?>
+    <a href="Student_List.php">Trở về</a><br><br>
+    <form method="post" action="Student_List.php?id=<?php echo $data['id']; ?>">
+        <table border="1" cellspacing="0" cellpadding="10">
+            <tr>
+                <td>Name</td>
+                <td>
+                    <input type="text" name="name" value="<?php echo $data['name']; ?>"/>
+                    <?php if (!empty($errors['name'])) echo $errors['name']; ?>
+                </td>
+            </tr>
+            <tr>
+                <td>Email</td>
+                <td>
+                    <input type="text" name="email" value="<?php echo $data['email']; ?>"/>
+                    <?php if (!empty($errors['email'])) echo $errors['email']; ?>
+                </td>
+            </tr>
+            <tr>
+                <td>Phone number</td>
+                <td>
+                    <input type="text" name="phone_number" value="<?php echo $data['phone_number']; ?>"/>
+                </td>
+            </tr>
+            <tr>
+                <td>Username</td>
+                <td>
+                    <input type="text" name="username" value="<?php echo $data['username']; ?>"/>
+                </td>
+            </tr>
+            <tr>
+                <td>Password</td>
+                <td>
+                    <input type="password" name="password" value="<?php echo $data['password']; ?>"/>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <input type="hidden" name="id" value="<?php echo $data['id']; ?>"/>
+                    <input type="submit" name="edit_student" value="Lưu"/>
+                </td>
+            </tr>
+        </table>
     </form>
 </body>
 </html>

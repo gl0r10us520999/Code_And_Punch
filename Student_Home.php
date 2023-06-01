@@ -112,7 +112,7 @@
     <h2>Update Profile</h2>
     <form method="post" action="">
         <!-- Student fields here -->
-        <a href="teachers.php">Click here</a>
+        <a href="Student_Edit.php">Click here</a>
     </form>
 </body>
 

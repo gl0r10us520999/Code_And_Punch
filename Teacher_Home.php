@@ -5,7 +5,7 @@
 
     $get_teacher_data = "SELECT * FROM users WHERE username=?";
     $preparedStatement = $conn->prepare($get_teacher_data);
-    $preparedStatement -> bind_param("s", $id );
+    $preparedStatement -> bind_param("s", $username );
     $preparedStatement->execute();
     $result = $preparedStatement->get_result();
 ?>
@@ -107,21 +107,6 @@
         <!-- Student fields here -->
         <a href="Add_Student.php">Add Student</a>
     </form>
-
-    <!-- Edit Student Form -->
-    <h2>Edit Student Information</h2>
-    <form method="post" action="">
-        <!-- Student fields here -->
-        <a href="Student_Edit.php">Edit Student Information</a>
-    </form>
-
-    <!-- Delete Student Form -->
-    <h2>Delete Student</h2>
-    <form method="post" action="">
-        <!-- Delete student here -->
-        <a href="Student_Delete.php">Delete Student</a>
-    </form>
-
     <!-- Display All Students -->
     <h2>Display Student List</h2>
     <form method="post" action="">
