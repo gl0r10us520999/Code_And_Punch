@@ -44,11 +44,16 @@
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
 
         label {
             display: block;
             margin-bottom: 8px;
+            text-align: center;
         }
 
         input[type="text"],
@@ -81,11 +86,13 @@
         .error-message {
             color: #FF0000;
             margin-top: 10px;
+            text-align: center;
         }
 
         .success-message {
             color: #00CC00;
             margin-top: 10px;
+            text-align: center;
         }
     </style>
 </head>
