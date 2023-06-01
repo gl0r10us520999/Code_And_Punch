@@ -1,3 +1,54 @@
+<?php
+session_start();
+
+function validateDataNew($data) {
+    $newData = stripslashes(trim(htmlspecialchars($data, ENT_QUOTES, "UTF-8")));
+    return $newData;
+}
+
+// connect
+$DATABASE_HOST = 'localhost';
+$DATABASE_USER = 'root';
+$DATABASE_PASS = '';
+$DATABASE_NAME = 'code_and_punch';
+
+$con = mysqli_connect($DATABASE_HOST, $DATABASE_USER, $DATABASE_PASS, $DATABASE_NAME);
+
+$query = 'SELECT challenge_name, description, answer, deadline, file_path FROM file';
+
+if ($result = mysqli_query($con, $query)) {
+    $challenges = array();
+
+    while ($row = mysqli_fetch_assoc($result)) {
+        $challengeNameData = $row['challenge_name'];
+        $descriptionData = $row['description'];
+        $answerData = $row['answer'];
+        $deadlineData = $row['deadline'];
+        $file_pathData = $row['file_path'];
+
+        // attach variable
+        $challengeNameNew = validateDataNew($challengeNameData);
+        $descriptionNew = validateDataNew($descriptionData);
+        $answerNew = validateDataNew($answerData);
+        $deadlineNew = validateDataNew($deadlineData);
+        $file_pathNew = $file_pathData;
+
+        // more information
+        $challenges[] = array(
+            'challenge_name' => $challengeNameNew,
+            'deadline' => $deadlineNew,
+            'answer' => $answerNew,
+            'file_path' => $file_pathNew,
+            'description' => $descriptionNew
+        );
+    }
+
+    $_SESSION['challenges'] = $challenges;
+}
+
+$con->close();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,37 +58,35 @@
 </head>
 
 <body>
-    <?php
-    session_start();
-    
-    
-    // Kiểm tra nếu câu trả lời đúng
-    $isCorrectAnswer = isset($_SESSION['answer']) ? $_SESSION['answer'] : false;
-
-    ?>
-
     <h1>Welcome, <?php echo $_SESSION['username']; ?></h1>
-    <h1>Your challenge</h1>
-    <h2><?php echo $_SESSION['challenge_name']; ?></h2>
-
-    <h2 name="deadline">Deadline:</h2>
-    <?php echo isset($_SESSION['deadline']) ? $_SESSION['deadline'] : 'nothing in hhere'; ?>
-
-    <h2 name="description">Description:</h2>
-    <?php echo isset($_SESSION['description']) ? $_SESSION['description'] : 'nothing in here'; ?>
-
-    <h2>Write your answer:</h2>
-    <form action="student_upload.php" method="post">
-        <textarea name="answer" rows="4" cols="50" placeholder="Enter your answer"></textarea>
-        <button type="submit" name="submit_answer">Submit Answer</button>
-    </form>
 
     <?php
-    if ($isCorrectAnswer) {
-        echo '<h2>Answer file:</h2>';
-        echo '<iframe src="' . $_SESSION['file_path'] . '" width="100%" height="500px"></iframe>';
+    if (isset($_SESSION['challenges']) && !empty($_SESSION['challenges'])) {
+        foreach ($_SESSION['challenges'] as $challenge) {
+            echo '<h1>Your challenge</h1>';
+            echo '<h2>' . $challenge['challenge_name'] . '</h2>';
+
+            echo '<h2 name="deadline">Deadline:</h2>';
+            echo isset($challenge['deadline']) ? $challenge['deadline'] : 'Nothing here';
+
+            echo '<h2 name="description">Description:</h2>';
+            echo isset($challenge['description']) ? $challenge['description'] : 'Nothing here';
+
+            echo '<h2>Write your answer:</h2>';
+            echo '<form method="post">';
+            echo '<textarea name="answer" rows="4" cols="50" placeholder="Enter your answer"></textarea>';
+            echo '<button type="submit" name="submit_answer">Submit Answer</button>';
+            echo '</form>';
+
+            if (isset($challenge['answer']) && $challenge['answer']) {
+                echo '<h2>Answer file:</h2>';
+                echo '<a href="download.php?file_path=' . $challenge['file_path'] . '">Download answer text here</a>';
+            } else {
+                echo 'No answer file available.';
+            }
+        }
     } else {
-        echo 'wrong';
+        echo 'No challenges available.';
     }
     ?>
 
