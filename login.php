@@ -42,10 +42,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $_SESSION['phone_number'] = $row['phone_number'];
                 //Check role of user and redirect to home page
                 if ($row["role"] == "student") {
-                    header("Location: Lab2_4.php");
+                    header("Location: Student_Home.php");
                     exit;
                 } elseif ($row["role"] == "teacher") {
-                    header("Location: Add_Student.php");
+                    header("Location: Teacher_Home.php");
                     exit;
                 }
             } else {
