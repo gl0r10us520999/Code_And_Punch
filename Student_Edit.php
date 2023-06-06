@@ -4,39 +4,30 @@
     if ($id) {
         $data = get_1_student_infor($id);
     }
-
     if (!$data) {
         header("Location: Student_List.php");
         exit();
     }
-    
+
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $data['id'] = isset($_POST['id']) ? $_POST['id'] : '';
-        $data['username'] = isset($_POST['username']) ? $_POST['username'] : '';
-        $data['password'] = isset($_POST['password']) ? $_POST['password'] : '';
         $data['name'] = isset($_POST['name']) ? $_POST['name'] : '';
         $data['email'] = isset($_POST['email']) ? $_POST['email'] : '';
         $data['phone_number'] = isset($_POST['phone_number']) ? $_POST['phone_number'] : '';
+        $data['username'] = isset($_POST['username']) ? $_POST['username'] : '';
+        $data['password'] = isset($_POST['password']) ? $_POST['password'] : '';
+        $data['id'] = isset($_POST['id']) ? $_POST['id'] : '';
 
+        // Validate thông tin
+        $errors = array();
         if (empty($data['name'])) {
-            $errors['name'] = 'Please input a valid name';
+            $errors['name'] = 'Chưa nhập tên sinh viên';
         }
-    
+
         if (empty($data['email'])) {
-            $errors['email'] = 'Please input a valid email';
-        }
-        
-        if (empty($data['password'])) {
-            $errors['password'] = 'Please input a valid password';
+            $errors['email'] = 'Chưa nhập email sinh viên';
         }
 
-        if (empty($data['username'])) {
-            $errors['username'] = 'Please input a valid username';
-        }
-
-        if (empty($data['phone_number'])) {
-            $errors['phone_number'] = 'Please input a valid phone number';
-        }
+        // Nếu không có lỗi thì chỉnh sửa sinh viên
         if (empty($errors)) {
             Edit_Student($data['id'], $data['name'], $data['email'], $data['phone_number'], $data['username'], $data['password']);
             // Trở về trang danh sách
@@ -44,6 +35,7 @@
             exit();
         }
     }
+
     disconnectDB();
 ?>
 <!DOCTYPE html>
@@ -119,8 +111,8 @@
 <body>
     <h1>Edit Student</h1>
     <a href="Student_List.php">Trở về</a><br><br>
-    <form method="post" action="Student_List.php?id=<?php echo $data['id']; ?>">
-        <table border="1" cellspacing="0" cellpadding="10">
+    <form method="post" action="Student_Edit.php?id=<?php echo $data['id']; ?>">
+        <table border="0" cellspacing="0" cellpadding="10">
             <tr>
                 <td>Name</td>
                 <td>
@@ -157,7 +149,7 @@
                 <td></td>
                 <td>
                     <input type="hidden" name="id" value="<?php echo $data['id']; ?>"/>
-                    <input type="submit" name="edit_student" value="Lưu"/>
+                    <input type="submit" name="Edit_Student" value="Lưu"/>
                 </td>
             </tr>
         </table>
