@@ -78,7 +78,8 @@ $con->close();
             echo '<button type="submit" name="submit_answer">Submit Answer</button>';
             echo '</form>';
 
-            if (isset($challenge['answer']) && $challenge['answer']) {
+            if (isset($challenge['answer']) && && $_POST['answer'] == $challenge['answer']) {
+                echo 'Right answer';
                 echo '<h2>Answer file:</h2>';
                 echo '<a href="download.php?file_path=' . $challenge['file_path'] . '">Download answer text here</a>';
             } else {
