@@ -1,2 +1,3 @@
 # Code_And_Punch
-1. Mỗi người tự tạo 1 branch riêng cho mình và up code lên đó, ko tự ý merge vào branch main
+![image](https://github.com/gl0r10us520999/Code_And_Punch/assets/124490947/88dd708e-9724-484a-9cc7-378838b11838)
+
