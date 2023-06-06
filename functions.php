@@ -19,25 +19,29 @@
         }
     }
     //Edit student informations
-    function Edit_Student($id, $username, $password, $name, $email, $phone_number) {
-        global $conn;
-        connectDB();
-
-        //Prevent SQLi
-        $id = intval($id);
-        $username = mysqli_real_escape_string($conn, $username);
-        $password = mysqli_real_escape_string($conn, $password);
-        $name = mysqli_real_escape_string($conn, $name);
-        $email = mysqli_real_escape_string($conn, $email);
-        $phone_number = mysqli_real_escape_string($conn, $phone_number);
-
-        $edit_student = "UPDATE users SET username = $username, password = $password, name = $name, email = $email, phone_number = $phone_number WHERE id = $id";
-
-        $query = mysqli_query($conn, $edit_student);
-
-        disconnectDB();
-        return $query;
-    }
+    function Edit_Student($student_id, $student_name, $student_email, $student_phone_number, $student_username, $student_password) {
+    global $conn;
+    
+    connectDB();
+    
+    // Prevent SQLi
+    $student_id = intval($student_id);
+    $student_name = mysqli_real_escape_string($conn, $student_name);
+    $student_email = mysqli_real_escape_string($conn, $student_email);
+    $student_phone_number = mysqli_real_escape_string($conn, $student_phone_number);
+    $student_username = mysqli_real_escape_string($conn, $student_username);
+    $student_password = mysqli_real_escape_string($conn, $student_password);
+    
+    $Edit_Student = "UPDATE users SET name = '$student_name', email = '$student_email', phone_number = '$student_phone_number', username = '$student_username', password = '$student_password' WHERE id = $student_id";
+    
+    // Thực hiện câu truy vấn
+    $query = mysqli_query($conn, $Edit_Student);
+    
+    // Đóng kết nối
+    disconnectDB();
+    
+    return $query;
+}
     //Delete student
     function Delete_Student($id) {
         global $conn;
@@ -52,29 +56,6 @@
         disconnectDB();
         return $query;
     }
-    // Add student
-    // function Add_Student($username, $password, $name, $email, $phone_number) {
-    //     global $conn;
-    //     connectDB();
-        
-    //     //Prevent SQLi
-    //     $username = mysqli_real_escape_string($conn, $username);
-    //     $password = mysqli_real_escape_string($conn, $password);
-    //     $name = mysqli_real_escape_string($conn, $name);
-    //     $email = mysqli_real_escape_string($conn, $email);
-    //     $phone_number = mysqli_real_escape_string($conn, $phone_number);
-
-    //     //Check if username alreeady exist
-    //     $query_check = mysqli_query($conn, "SELECT id FROM users WHERE username = $username");
-    //     if ($query_check && mysqli_num_rows($query_check) == 0) {
-    //         $add_student = "INSERT INTO users (username, password, role, name, email, phone_number) VALUES ($username, $password, student, $name, $email, $phone_number)";
-    //         mysqli_query($conn, $add_student);
-    //     }else{
-    //         $query = false;
-    //     }
-    //     disconnectDB();
-    //     return $query;
-    // }
     function Add_Student($username, $password, $name, $email, $phone_number) {
         global $conn;
         connectDB();
