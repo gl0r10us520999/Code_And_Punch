@@ -118,5 +118,26 @@
         $result = $row;
     }
     return $result;
-    }    
+    } 
+    function Edit_Student_For_Student($student_id, $student_email, $student_phone_number, $student_password) {
+        global $conn;
+        
+        connectDB();
+        
+        // Prevent SQLi
+        $student_id = intval($student_id);
+        $student_email = mysqli_real_escape_string($conn, $student_email);
+        $student_phone_number = mysqli_real_escape_string($conn, $student_phone_number);
+        $student_password = mysqli_real_escape_string($conn, $student_password);
+        
+        $Edit_Student = "UPDATE users SET email = '$student_email', phone_number = '$student_phone_number', password = '$student_password' WHERE id = $student_id";
+        
+        // Thực hiện câu truy vấn
+        $query = mysqli_query($conn, $Edit_Studen_For_Student);
+        
+        // Đóng kết nối
+        disconnectDB();
+        
+        return $query;
+    }   
 ?>

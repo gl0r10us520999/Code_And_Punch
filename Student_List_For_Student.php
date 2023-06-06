@@ -129,6 +129,6 @@
             </tr>
         <?php } ?>
     </table>
-    <button class="back-btn" onclick="location.href='teacher.php'" type="button">Trở về</button>
+    <button class="back-btn" onclick="location.href='Student_Home.php'" type="button">Trở về</button>
 </body>
 </html>

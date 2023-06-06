@@ -16,7 +16,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teacher Page</title>
+    <title>Student Page</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -58,12 +58,9 @@
             margin-top: 10px;
         }
 
-        /* Update background color */
         body {
             background-color: #fafafa;
         }
-
-        /* Update form styles */
         .form-group {
             margin-bottom: 20px;
         }
@@ -112,7 +109,7 @@
     <h2>Update Profile</h2>
     <form method="post" action="">
         <!-- Student fields here -->
-        <a href="Student_Edit.php">Click here</a>
+        <a href="Student_Edit_For_Student.php">Click here</a>
     </form>
 </body>
 

@@ -5,15 +5,13 @@
         $data = get_1_student_infor($id);
     }
     if (!$data) {
-        header("Location: Student_List.php");
+        header("Location: Student_List_For_Student.php");
         exit();
     }
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $data['name'] = isset($_POST['name']) ? $_POST['name'] : '';
         $data['email'] = isset($_POST['email']) ? $_POST['email'] : '';
         $data['phone_number'] = isset($_POST['phone_number']) ? $_POST['phone_number'] : '';
-        $data['username'] = isset($_POST['username']) ? $_POST['username'] : '';
         $data['password'] = isset($_POST['password']) ? $_POST['password'] : '';
         $data['id'] = isset($_POST['id']) ? $_POST['id'] : '';
 
@@ -29,7 +27,7 @@
 
         // Nếu không có lỗi thì chỉnh sửa sinh viên
         if (empty($errors)) {
-            Edit_Student($data['id'], $data['name'], $data['email'], $data['phone_number'], $data['username'], $data['password']);
+            Edit_Student_For_Student($data['id'], $data['email'], $data['phone_number'], $data['password']);
             // Trở về trang danh sách
             header("Location: Student_List.php");
             exit();
@@ -111,15 +109,8 @@
 <body>
     <h1>Edit Student</h1>
     <a href="Student_List.php">Trở về</a><br><br>
-    <form method="post" action="Student_Edit.php?id=<?php echo $data['id']; ?>">
+    <form method="post" action="Student_Edit_For_Student.php?id=<?php echo $data['id']; ?>">
         <table border="0" cellspacing="0" cellpadding="10">
-            <tr>
-                <td>Name</td>
-                <td>
-                    <input type="text" name="name" value="<?php echo $data['name']; ?>"/>
-                    <?php if (!empty($errors['name'])) echo $errors['name']; ?>
-                </td>
-            </tr>
             <tr>
                 <td>Email</td>
                 <td>
@@ -134,12 +125,6 @@
                 </td>
             </tr>
             <tr>
-                <td>Username</td>
-                <td>
-                    <input type="text" name="username" value="<?php echo $data['username']; ?>"/>
-                </td>
-            </tr>
-            <tr>
                 <td>Password</td>
                 <td>
                     <input type="password" name="password" value="<?php echo $data['password']; ?>"/>
@@ -149,7 +134,7 @@
                 <td></td>
                 <td>
                     <input type="hidden" name="id" value="<?php echo $data['id']; ?>"/>
-                    <input type="submit" name="Edit_Student" value="Lưu"/>
+                    <input type="submit" name="Edit_Student_For_Student" value="Lưu"/>
                 </td>
             </tr>
         </table>
