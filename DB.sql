@@ -19,3 +19,13 @@ INSERT INTO `users` (`id`, `username`, `password`, `role`, `name`, `email`, `pho
 ('0', 'QuanNH', 'Quan520999', 'teacher', 'Quân','quannhhe181611@fpt.edu.vn','0338774401'),
 ('1', 'HuyDM','Huy129222', 'student', 'Huy','huydmhe171027@fpt.edu.vn','0582189459'),
 ('2', 'Student1', 'studen0386113', 'student', 'student1','student123456@fpt.edu.vn','0123456789');
+
+
+CREATE TABLE challenge (
+    `file_id` INT(11) PRIMARY KEY AUTO_INCREMENT,
+    `challenge_name` VARCHAR(255) NOT NULL,
+    `description` TEXT,
+    `answer` VARCHAR(255),
+    `deadline` DATETIME,
+    `file_path` VARCHAR(255)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

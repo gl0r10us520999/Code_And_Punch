@@ -125,45 +125,16 @@
     <!-- Upload Challenge Form -->
     <div class="upload-form">
         <h2>Upload Challenge</h2>
-        <form action="upload_challenge.php" method="post" enctype="multipart/form-data">
-            <div class="form-group">
-                <label for="challenge_name">Challenge Name:</label>
-                <input type="text" name="challenge_name" id="challenge_name" required>
-            </div>
-
-            <div class="form-group">
-                <label for="challenge_hint">Hint:</label>
-                <input type="text" name="challenge_hint" id="challenge_hint" required>
-            </div>
-
-            <div class="form-group">
-                <label for="answer_or_message">Answer or Message:</label>
-                <input type="text" name="answer_or_message" id="answer_or_message" required>
-            </div>
-
-            <div class="form-group">
-                <label for="fileToUpload">Challenge File:</label>
-                <input type="file" name="fileToUpload" id="fileToUpload" required>
-            </div>
-
-            <div class="form-group">
-                <input type="submit" value="Upload Challenge" name="submit">
-            </div>
-        </form>
-    </div>
-
-    <!-- View Submitted Challenges -->
-    <h2>View Submitted Challenges</h2>
-    <form method="post" action="">
+        <form method="post" action="">
         <!-- Student fields here -->
-        <a href="submit.php">Click here to view</a>
+        <a href="teacherHome.php">Upload Challenge</a>
     </form>
-
+    </div>
     <!-- View Submitted Homework -->
     <h2>View Submitted Homework</h2>
     <form method="post" action="">
         <!-- Student fields here -->
-        <a href="check_homework.php">Click here to view</a>
+        <a href="view.php">Click here to view</a>
     </form>
 
     <!-- Update Profile -->

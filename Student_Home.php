@@ -101,15 +101,21 @@
     <!-- Display All Students -->
     <h2>Display Student List</h2>
     <form method="post" action="">
-        <!-- Student fields here -->
         <a href="Student_List_For_Student.php">Student List</a>
     </form>
 
     <!-- Update Profile -->
     <h2>Update Profile</h2>
     <form method="post" action="">
-        <!-- Student fields here -->
         <a href="Student_Edit_For_Student.php">Click here</a>
+    </form>
+    <h2>Challenge</h2>
+    <form method="post" action="">
+        <a href="studentHome.php">Click here</a>
+    </form>
+    <h2>Homework</h2>
+    <form method="post" action="">
+        <a href="view_student.php">Click here</a>
     </form>
 </body>
 

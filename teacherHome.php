@@ -51,7 +51,7 @@
 <body>
     <h1>Welcome, <?php session_start(); echo $_SESSION['username']; ?></h1>
 
-    <form action="challenge/upload.php" method="post" enctype="multipart/form-data">
+    <form action="upload_challenge.php" method="post" enctype="multipart/form-data">
         <!-- Challenge Name -->
         <h2>Challenge Name:</h2>
         <input type="text" name="challenge_name" placeholder="Enter challenge name">
