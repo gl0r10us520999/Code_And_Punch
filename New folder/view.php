@@ -19,11 +19,11 @@ if(isset($_FILES['uploaded_file'])) {
     // Lấy thông tin về file
     $file_name = $file['name'];
     $file_tmp = $file['tmp_name'];
-
+    $file_error = $file['error'];
     // Kiểm tra xem có lỗi trong quá trình upload hay không
     if($file_error === UPLOAD_ERR_OK) {
         // Di chuyển file tạm vào đường dẫn lưu trữ của bạn
-        $destination = 'D:\Code and Punch\Quân\uploads' . $file_name;
+        $destination = '\Code and Punch\Quân\uploads\file_' . $file_name;
         move_uploaded_file($file_tmp, $destination);
 
         // Lưu thông tin file vào cơ sở dữ liệu
